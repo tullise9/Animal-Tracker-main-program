@@ -1,0 +1,56 @@
+### Add a new pet: Fluffy
+POST http://localhost:3000/pets
+Content-Type: application/json
+
+{
+  "name": "Fluffy",
+  "birthday": "2021-06-10",
+  "funfact": "Loves naps",
+  "photoUrl": "https://example.com/fluffy.jpg"
+}
+
+###
+
+### Add a new pet: Bella
+POST http://localhost:3000/pets
+Content-Type: application/json
+
+{
+  "name": "Bella",
+  "birthday": "2020-03-15",
+  "funfact": "Chases butterflies",
+  "photoUrl": "https://example.com/bella.jpg"
+}
+
+###
+
+### Add a new pet: Max
+POST http://localhost:3000/pets
+Content-Type: application/json
+
+{
+  "name": "Max",
+  "birthday": "2019-11-25",
+  "funfact": "Loves playing fetch",
+  "photoUrl": "https://example.com/max.jpg"
+}
+
+###
+
+### Get ALL pets
+GET http://localhost:3000/pets
+Accept: application/json
+
+###
+
+### Search for pets by name (e.g., "Fluffy")
+GET http://localhost:3000/pets?name=Fluffy
+Accept: application/json
+
+### Update a pet
+PUT http://localhost:3000/pets/6882942744beb71f13a221f0
+Content-Type: application/json
+
+{
+  "funfact": "Now loves chasing balls"
+}
