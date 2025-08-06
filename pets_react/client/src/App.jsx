@@ -4,6 +4,7 @@ import AddPetPage from './pages/AddPetPage.jsx';
 import PetProfilePage from './pages/PetProfilePage.jsx';
 import NavBar from './components/Navigation.jsx';
 import EditPetPage from './pages/EditPetPage.jsx';
+import EditWeightPage from './pages/EditWeightPage.jsx';
 
 import './App.css';
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/add" element={<AddPetPage />} />
           <Route path="/pet/:id" element={<PetProfilePage />} />
           <Route path="/pet/:id/edit" element={<EditPetPage />} />
+          <Route path="/pet/:id/edit-weights" element={<EditWeightPage />} />
         </Routes>
       </div>
       <footer>
