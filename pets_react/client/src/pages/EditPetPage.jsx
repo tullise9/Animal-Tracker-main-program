@@ -7,13 +7,10 @@ function EditPetPage() {
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
-  // Editable fields
   const [name, setName] = useState('');
   const [birthday, setBirthday] = useState('');
   const [funfact, setFunfact] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
-
-  // Popup visibility
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
@@ -42,11 +39,20 @@ function EditPetPage() {
   const handleSave = async (e) => {
     e.preventDefault();
 
+    // Fix birthday by shifting local date to UTC
+    const localDate = new Date(birthday);
+    localDate.setDate(localDate.getDate() + 1);
+
     try {
       const res = await fetch(`http://localhost:3000/pets/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, birthday, funfact, photoUrl }),
+        body: JSON.stringify({
+          name,
+          birthday: localDate.toISOString(),
+          funfact,
+          photoUrl,
+        }),
       });
 
       const updatedPet = await res.json();
@@ -56,7 +62,7 @@ function EditPetPage() {
         return;
       }
 
-      navigate(`/pet/${id}`); // Go back to profile page
+      navigate(`/pet/${id}`);
     } catch (err) {
       console.error(err);
       setError('An error occurred while updating the pet.');
@@ -64,11 +70,11 @@ function EditPetPage() {
   };
 
   const handleCancel = () => {
-    setShowPopup(true); // Show confirmation popup
+    setShowPopup(true);
   };
 
   const confirmCancel = () => {
-    navigate(`/pet/${id}`); // Back to profile page if confirmed
+    navigate(`/pet/${id}`);
   };
 
   return (
@@ -86,13 +92,10 @@ function EditPetPage() {
           <input type="date" value={birthday} onChange={(e) => setBirthday(e.target.value)} required />
         </label>
         <label>
-          Fun Fact:
+          Care Notes:
           <input value={funfact} onChange={(e) => setFunfact(e.target.value)} />
         </label>
-        <label>
-          Photo URL:
-          <input type="url" value={photoUrl} onChange={(e) => setPhotoUrl(e.target.value)} />
-        </label>
+        
 
         <div className="editpet-buttons">
           <button type="submit" className="editpet-save">Save</button>

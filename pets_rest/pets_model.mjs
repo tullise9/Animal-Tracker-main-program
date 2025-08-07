@@ -52,4 +52,8 @@ async function getPetById(id) {
     return await Pet.findById(id)
 }
 
-export{connect, Pet, createPet, getPets, updatePet, getPetById}
+async function deletePetById(id) {
+  return await Pet.findByIdAndDelete(id);
+}
+
+export{connect, Pet, createPet, getPets, updatePet, getPetById, deletePetById}

@@ -30,7 +30,7 @@ app.post('/pets', asyncHandler(async (req, res) => {
     const pet = await pets.createPet(req.body.name, 
                             req.body.birthday, 
                             req.body.funfact,
-                            req.body.photoUrl);
+                            req.body.imageUrl);
     res.status(201).json(pet);
     }    
 }))
@@ -65,3 +65,15 @@ app.put('/pets/:id', asyncHandler(async (req, res) => {
     }
     res.json(pet);
   }));
+
+  app.delete('/pets/:id', asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const deletedPet = await pets.deletePetById(id);
+
+    if (!deletedPet) {
+        return res.status(404).json({ message: "Pet not found" });
+    }
+
+    res.json({ message: "Pet successfully deleted" });
+}));
+

@@ -13,7 +13,7 @@ function HomePage() {
           ? `http://localhost:3000/pets?name=${encodeURIComponent(search)}`
           : `http://localhost:3000/pets`
 
-        const res = await fetch(url)
+        const res = await fetch(url, { cache: 'no-store' })
         const data = await res.json()
 
         if (res.status === 404) {
@@ -27,7 +27,7 @@ function HomePage() {
         console.error(err)
         setError('Failed to fetch pets.')
       }
-    };
+    }
 
     fetchPets()
   }, [search])
@@ -41,18 +41,27 @@ function HomePage() {
           type="text"
           placeholder="Search by name..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={e => setSearch(e.target.value)}
           className="home-search"
         />
-        <button className="home-add-btn"><Link to="/add">Add Pet</Link></button>
+        <button className="home-add-btn">
+          <Link to="/add">Add Pet</Link>
+        </button>
       </div>
 
       {error && <p className="home-error">{error}</p>}
 
       <div className="pet-grid">
-        {pets.map((pet) => (
+        {pets.map(pet => (
           <div key={pet._id} className="pet-card">
-            <img src={pet.photoUrl || '/default-pet.png'}/>
+            <img
+              src={
+                pet.photoUrl
+                  ? `${pet.photoUrl}?t=${Date.now()}`
+                  : '/default-pet.png'
+              }
+              alt={pet.name}
+            />
             <h3>{pet.name}</h3>
             <Link to={`/pet/${pet._id}`}>View Profile</Link>
           </div>
@@ -62,5 +71,6 @@ function HomePage() {
   )
 }
 
-export default HomePage;
+export default HomePage
+
 
